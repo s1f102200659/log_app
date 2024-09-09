@@ -5,14 +5,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Form</title>
-    <link rel="stylesheet" href="{% static 'kyoyu_app/css/login.css' %}">
+    <link rel="stylesheet" href="{% static 'log_app/css/login.css' %}">
 </head>
 <body>
     <div class="login-box">
         <h2>Login</h2>
-        <form>
-            <input type="text" placeholder="Username">
-            <input type="password" placeholder="Password">
+        <form action="" method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
             <input type="submit" value="ログイン">
         </form>
         <a href="#" class="register-link">ご登録はこちらから</a>

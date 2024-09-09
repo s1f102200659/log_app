@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <h1>StudentList</h1>
+  <p>(一応)がついてるのは、園側が管理できるようにするつもり</p>
+  <a href="{% url 'create-student' %}">生徒の追加(一応)</a>
+  <table>
+    <tr>
+      <th>園ID</th>
+      <th>生徒ID</th>
+      <th>氏名</th>
+      <th>担任</th>
+      <th>生年月日</th>
+      <th>アレルギー</th>
+      <th>追記</th>
+    </tr>
+    {% for student in students %}
+    <tr>
+      <td>{{ student.kindergarten }}</td>
+      <td>{{ student.student_id }}</td>
+      <td>{{ student.name }}</td>
+      <td>{{ student.caregiver }}</td>
+      <td>{{ student.birth_date }}</td>
+      <td>{{ student.allergy_info }}</td>
+      <td>{{ student.additional_info }}</td>
+      <td><a href="{% url 'student' student.student_id %}">確認</a></td>
+      <td><a href="{% url 'edit-student' student.student_id %}">編集(一応)</a></td>
+      <td><a href="{% url 'delete-student' student.student_id %}">削除(一応)</a></td>
+    </tr>
+    {% endfor %}
+  </table>
+  <p><a href="{% url 'home'%}">戻る</a></p>
+</body>
+</html>
