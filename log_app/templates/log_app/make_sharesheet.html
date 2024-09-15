@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>日誌記録ページ</title>
-    <link rel="stylesheet" href="{% static 'kyoyu_app/css/make_kyoyusheet.css' %}">
+    <link rel="stylesheet" href="{% static 'log_app/css/make_sharesheet.css' %}">
 </head>
 <body>
     <div class="container">
@@ -13,13 +13,14 @@
         <form>
             <label for="activity">本日の活動内容</label>
             <textarea id="activity" name="activity" rows="4"></textarea>
-            
+
             <label for="contact">本日の生徒の様子</label>
             <textarea id="" name="activity" rows="4"></textarea>
 
             <div class="arrow">
                 <a href="#">➜</a>
             </div>
+            <a href="{% url 'home'%}">戻る</a>
         </form>
     </div>
 </body>
