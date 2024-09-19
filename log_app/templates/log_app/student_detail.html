@@ -6,7 +6,14 @@
   <title>Document</title>
 </head>
 <body>
-  <h1>Student: {{ student }}</h1>
+  <!-- <h1>Student: {{ student }}</h1> -->
+  <h3>保育園:{{ student.kindergarten }}</h3>
+  <h3>生徒ID:{{ student.student_id }}</h3>
+  <h3>氏名:{{ student.name }}</h3>
+  <h3>担任:{{ student.caregiver }}</h3>
+  <h3>生年月日:{{ student.birth_date }}</h3>
+  <h3>アレルギー:{{ student.allergy_info }}</h3>
+  <h3>追記:{{ student.additional_info }}</h3>
   <p><a href="{% url 'students'%}">戻る</a></p>
 </body>
 </html>
