@@ -27,6 +27,11 @@ body {
     padding: 12px 15px;
     border: 1px solid #dee2e6;
     text-align: center;
+    max-width: 150px;
+    max-height: 50px;    /* セルの最大高さを設定 */
+    overflow: hidden;    /* オーバーフローする内容を隠す */
+    text-overflow: ellipsis; /* 省略記号を使用 */
+    white-space: nowrap; /* テキストを折り返さない */
   }
   
   th {
