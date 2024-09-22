@@ -1,11 +1,10 @@
-{% load static %}
 <!DOCTYPE html>
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ホームページ</title>
-    <link rel="stylesheet" href="{% static 'log_app/css/home.css' %}">
+    <link rel="stylesheet" href="../../static/log_app/css/home.css">
 </head>
 <body>
     {% if request.user.is_authenticated %}
@@ -19,24 +18,19 @@
         <h1>Home</h1>
         <div class="circle-container">
             <div class="circle-item">
-                <div class="circle"></div>
-            </div>
-            <div class="circle-item">
-                <div class="circle">📓</div>
+                <a href="{% url 'sharesheet'%}" class="circle">📓</a>
                 <p><a href="{% url 'sharesheet'%}">日誌記入</a></p>
             </div>
             <div class="circle-item">
-                <div class="circle">🧑‍🎓</div>
+                <a href="{% url 'students'%}" class="circle">🧑‍🎓</a>
                 <p><a href="{% url 'students'%}">生徒情報</a></p>
             </div>
             <div class="circle-item">
-                <div class="circle">提案</div>
+                <a href="{% url 'caliculm'%}" class="circle">🖼️</a>
                 <p><a href="{% url 'caliculm'%}">提案</a></p>
             </div>
-            <div class="circle-item">
-                <div class="circle"></div>
-            </div>
         </div>
+        
     </div>
 </body>
 </html>
