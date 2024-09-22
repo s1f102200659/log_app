@@ -1,0 +1,65 @@
+/* General styles for body */
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    background-color: #f8f9fa;
+    line-height: 1.6;
+  }
+  
+  /* Styles for the unordered list (ul) */
+  ul {
+    list-style-type: none; /* リストのデフォルトマーカーを削除 */
+    padding: 0;
+    max-width: 600px; /* 横幅を制限 */
+    margin: 20px auto; /* 真ん中に表示 */
+    background-color: #ffffff;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Styles for each list item (li) */
+  li {
+    padding: 15px;
+    border-bottom: 1px solid #dee2e6;
+    font-size: 18px;
+  }
+  
+  /* Remove bottom border for the last list item */
+  li:last-child {
+    border-bottom: none;
+  }
+  
+  /* Style for the labels (strong) */
+  strong {
+    color: #343a40;
+    font-weight: bold;
+  }
+  
+  /* Link back to students list */
+  a {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    text-align: center;
+  }
+  
+  a:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Responsive design */
+  @media (max-width: 600px) {
+    ul {
+      max-width: 100%; /* 小さい画面では横幅を画面幅に合わせる */
+    }
+    
+    li {
+      font-size: 16px; /* フォントサイズを調整 */
+      padding: 10px;
+    }
+  }

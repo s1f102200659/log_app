@@ -1,0 +1,94 @@
+/* make_caliculm.css */
+/* コンテナのスタイル */
+.container {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    border-radius: 8px;
+    background-color: #F9F9F9;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+/* タイトルのスタイル */
+.container h1 {
+    text-align: center;
+    color: #333;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+/* ラベルのスタイル */
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #555;
+}
+/* テキストインプットとテキストエリアのスタイル */
+input[type="text"],
+input[type="date"],
+textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 25px; /* 間隔を広げるためにmargin-bottomを調整 */
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 16px;
+    background-color: #fff;
+    color: #333;
+}
+textarea {
+    resize: vertical;
+    height: 150px; /* テキストエリアの高さを指定 */
+}
+/* 矢印リンクのスタイル */
+.arrow {
+    text-align: right; /* 矢印を右寄せ */
+    margin-bottom: 20px; /* 戻るボタンとの間にスペースを追加 */
+}
+.arrow a {
+    display: inline-block;
+    font-size: 24px;
+    color: #007BFF;
+    text-decoration: none;
+    transition: color 0.3s ease;
+    padding: 10px;
+}
+.arrow a:hover {
+    color: #0056B3;
+}
+/* 戻るリンクのスタイル */
+p {
+    text-align: right; /* 戻るリンクを右寄せ */
+    margin-right: 30px; /* 戻るボタンを少し左にずらす */
+}
+p a {
+    font-size: 16px;
+    color: #007BFF;
+    text-decoration: none;
+}
+p a:hover {
+    color: #0056B3;
+}
+/* フォーム全体のスタイル */
+form {
+    margin-top: 20px;
+}
+/* Button-style links */
+a[href*="create-student"],
+a[href*="edit-student"],
+a[href*="delete-student"],
+a[href*="home"] {
+    display: inline-block;
+    padding: 10px 15px;
+    margin: 10px;
+    background-color: #007BFF;
+    color: white;
+    border-radius: 5px;
+    text-align: center;
+}
+a[href*="create-student"]:hover,
+a[href*="edit-student"]:hover,
+a[href*="delete-student"]:hover,
+a[href*="home"]:hover {
+    background-color: #0056B3;
+}
