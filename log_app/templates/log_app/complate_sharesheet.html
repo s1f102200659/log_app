@@ -1,0 +1,39 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>日誌記録ページ</title>
+    <link rel="stylesheet" href="{% static 'log_app/css/check_sharesheet.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>共有シートが登録されました</h1>
+        <div class="img-container" style="text-align: center;">
+            <img src="{% static 'images/complate.jpg' %}" alt="完了画像">
+        </div>
+        <a href="{% url 'home'%}">ホームに戻る</a>
+    </div>
+</body>
+</html>
+
+<style>
+.img-container {
+    width: 300px; /* 画像の幅 */
+    height: 300px; /* 画像の高さ */
+    background-color: white; /* 背景を白に */
+    border-radius: 50%; /* 丸くする */
+    overflow: hidden; /* 画像がコンテナの外に出ないようにする */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto; /* 中央寄せ */
+}
+
+.img-container img {
+    width: 100%; /* 画像をコンテナ内にフィットさせる */
+    height: auto; /* アスペクト比を保つ */
+    object-fit: cover; /* 画像がコンテナ全体に適切に収まるようにする */
+}
+</style>

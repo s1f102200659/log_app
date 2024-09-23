@@ -1,0 +1,29 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>日誌記録ページ</title>
+    <link rel="stylesheet" href="{% static 'log_app/css/check_sharesheet.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>日誌記録ページ</h1>
+        <form method="POST" action="{% url 'sheet_complate' %}">
+            {% csrf_token %}
+            <label for="contact">日誌の確認</label>
+            <textarea readonly>{{sheet}}</textarea>
+            <div class="check_button">
+            <input type="hidden" name="sheet" value="{{ sheet }}">
+                <button  type="submit" href="{% url  'sheet_complate'%}">この内容で問題なし</button>
+            </div>
+        </form>
+        <form method="POST" action="{% url 'sharesheet' %}">
+            {% csrf_token %}
+            <input type="hidden" name="activity" value="{{ activity }}">
+            <input type="hidden" name="student" value="{{ student }}">
+            <button type="submit" href="{% url 'sharesheet'%}">入力に戻る</button>
+        </form>
+    </div>
+</html>
