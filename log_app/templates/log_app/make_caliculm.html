@@ -1,17 +1,16 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
-    <link rel="stylesheet" href="../../static/log_app/css/make_caliculm.css">
+  <link rel="stylesheet" href="{% static 'log_app/css/make_caliculm.css' %}">
 </head>
 <body>
   <div class="container">
     <h1>授業提案</h1>
     <form>
-        <label for="class">クラス</label>
-        <input type="text" id="class" name="class">
         <label for="date">日付</label>
         <input type="date" id="date" name="date">
         <label for="objective">本日のねらい</label>
@@ -20,7 +19,7 @@
             <a href="#">➜</a>
         </div>
     </form>
+    <a href="{% url 'home'%}">戻る</a>
 </div>
-  <p><a href="{% url 'home'%}">戻る</a></p>
 </body>
 </html>

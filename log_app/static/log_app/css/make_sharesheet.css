@@ -38,11 +38,11 @@ textarea {
 }
 textarea {
     resize: vertical;
-    height: 150px; /* テキストエリアの高さを指定 */
+    height: 300px; /* テキストエリアの高さを指定 */
 }
 /* 矢印リンクのスタイル */
 .arrow {
-    text-align: right; /* 矢印を右寄せ */
+    text-align: center; /* 矢印を右寄せ */
     margin-bottom: 20px; /* 戻るボタンとの間にスペースを追加 */
 }
 .arrow a {

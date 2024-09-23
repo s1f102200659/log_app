@@ -1,0 +1,40 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>日誌記録ページ</title>
+    <link rel="stylesheet" href="{% static 'kyoyu_app/css/makesharesheet.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>日誌記録ページ</h1>
+        
+        <form id="activityForm" method="POST" action="{% url 'check_sharesheet' %}">
+            {% csrf_token %}
+            <div class="section">
+                <label for="activity">活動内容</label>
+                <textarea id="activity" name="activity" rows="6" cols="100" class="box"></textarea>
+            </div>
+        
+            <div class="section">
+                <label for="student">生徒の様子</label>
+                <textarea id="student" name="student" rows="6" cols="40" class="box"></textarea>
+            </div>
+        
+            <div class="section">
+                <button type="submit" class="arrow-button">→dsdad</button>
+            </div>
+        </form>
+        
+        <script>
+            document.getElementById("submitArrow").addEventListener("click", function(e) {
+                e.preventDefault();  // デフォルトのリンク動作を無効化
+                document.getElementById("activityForm").submit();  // フォームを送信
+            });
+        </script>
+        
+    </div>
+</body>
+</html>
