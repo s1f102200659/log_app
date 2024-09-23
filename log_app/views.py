@@ -66,7 +66,7 @@ from .models import Student  # 生徒モデルをインポート
 def search_students(request):
     query = request.GET.get('query')
     students = Student.objects.filter(name__icontains=query)  # 名前にクエリが含まれる生徒を検索
-    return render(request, 'students/search_results.html', {'students': students, 'query': query})
+    return render(request, 'log_app/search_results.html', {'students': students, 'query': query})
 
 # def login_view(request):
 #     if request.method == 'POST':

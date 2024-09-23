@@ -7,11 +7,6 @@
   <link rel="stylesheet" href="../../static/log_app/css/student.css">
 </head>
 <body>
-  <h1>生徒情報検索</h1>
-  <form method="GET" action="{% url 'search_students' %}">
-    <input type="text" name="query" placeholder="生徒名やIDを入力" required>
-    <button type="submit">検索</button>
-  </form>
 
   <ul>
     <li><strong>保育園:</strong> {{ student.kindergarten }}</li>
