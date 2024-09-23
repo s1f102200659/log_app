@@ -1,15 +1,13 @@
 from django.urls import path
 from . import views
-from .views import StudentList, StudentDetail, StudentCreate, StudentUpdate, StudentDelete, CaregiverLoginView
+from .views import StudentList, StudentDetail, StudentCreate, StudentUpdate, StudentDelete, CaregiverLoginView, search_students  # search_studentsをインポート
 from django.conf import settings
 from django.contrib.auth.views import LogoutView
-# from django.conf.urls.static import static
-
 
 urlpatterns = [
-    path('',views.login),
-    path('home/',views.home, name='home'),
-    path('make_sharesheet',views.make_sharesheet, name='sharesheet'),
+    path('', views.login),
+    path('home/', views.home, name='home'),
+    path('make_sharesheet', views.make_sharesheet, name='sharesheet'),
     path('make_caliculm', views.make_caliculm, name='caliculm'),
     path('student_info', StudentList.as_view(), name='students'),
     path('student/<int:pk>/', StudentDetail.as_view(), name='student'),
@@ -18,8 +16,9 @@ urlpatterns = [
     path('delete-student/<int:pk>/', StudentDelete.as_view(), name='delete-student'),
     path('login/', CaregiverLoginView.as_view(), name='login'),
     path('logout/', LogoutView.as_view(next_page="login"), name='logout'),
-
+    path('search/', search_students, name='search_students'),  # 検索機能を追加
 ]
+
 
 
     # path('', PostList.as_view(), name='posts'),
