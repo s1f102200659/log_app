@@ -1,52 +1,101 @@
 body {
     font-family: 'Arial', sans-serif;
-    background-color: #f5f5f5;
+    background-color: #f5f5f5; /* 背景色は柔らかいグレー */
     color: #333;
     margin: 0;
     padding: 20px;
-    display: flex; /* フレックスボックスを使う */
-    justify-content: center; /* 水平方向の中央揃え */
-    align-items: flex-start; /* 垂直方向の開始位置に揃える */
-    height: 100vh; /* ビューポートの高さに合わせる */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+}
+
+.header {
+    width: 100%;
+    background-color: #4a90e2; /* 青系のヘッダー */
+    color: white;
+    padding: 20px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    transition: background-color 0.3s;
+}
+
+.header:hover {
+    background-color: #357ABD; /* ホバー時に少し濃い青に */
+}
+
+.app-title {
+    margin: 0;
+    font-size: 28px;
+    letter-spacing: 1px;
+    color: #fff; /* タイトルは白色 */
+    font-family: 'Arial', sans-serif; /* よりプロフェッショナルな印象に */
+}
+
+.auth-links {
+    display: flex;
+    align-items: center;
+}
+
+.button {
+    background-color: #fff; /* ボタンは白色 */
+    color: #4a90e2; /* 文字色は青 */
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-left: 10px;
+    text-decoration: none;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.button:hover {
+    background-color: #e0e0e0; /* ホバー時に少しグレーに */
+    transform: scale(1.05);
 }
 
 .container {
     max-width: 1200px;
-    width: 100%; /* 幅を100%にしてレスポンシブ対応 */
+    width: 100%;
     padding: 20px;
     background-color: #fff;
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    text-align: center; /* 中央揃え */
-    margin-top: 50px; /* 上にずらすためのマージン */
+    text-align: center;
 }
 
-h1 {
+h2 {
     text-align: center;
     color: #4a90e2;
     margin-bottom: 30px;
+    font-family: 'Arial', sans-serif;
 }
 
 .circle-container {
     display: flex;
-    justify-content: center; /* ボタンを中央に揃える */
+    justify-content: center;
     align-items: center;
-    flex-wrap: wrap; /* ボタンが多い場合は折り返す */
-    margin: 20px 0; /* 上下のマージンを追加 */
+    flex-wrap: wrap;
+    margin: 20px 0;
 }
 
 .circle-item {
-    flex: 1 0 150px; /* 最小幅を設定して横並びを維持 */
+    flex: 1 0 150px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 0 10px; /* 左右のマージンを追加 */
+    margin: 0 10px;
 }
 
 .circle {
     width: 100px;
     height: 100px;
-    background-color: #4a90e2;
+    background-color: #4a90e2; /* 青系の背景 */
     border-radius: 50%;
     display: flex;
     justify-content: center;
@@ -72,13 +121,5 @@ a:hover {
 }
 
 p {
-    margin-top: 10px;
+    margin-top: 10px; 
 }
-
-/* ログインボタンの位置を左端にするためのスタイル */
-.login-link {
-    position: absolute; /* 絶対位置 */
-    top: 20px; /* 上からの位置 */
-    left: 20px; /* 左からの位置 */
-}
-
