@@ -81,7 +81,6 @@ nav {
     border-radius: 5px; /* 角を丸く */
     box-sizing: border-box; /* ボックスサイズを調整 */
 }
-
 .login-box input[type="submit"] {
     background-color: #4a90e2; /* ボタンの背景色 */
     color: white; /* ボタンの文字色 */
