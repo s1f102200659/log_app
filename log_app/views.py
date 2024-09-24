@@ -63,10 +63,16 @@ class CaregiverLoginView(LoginView):
 from django.shortcuts import render
 from .models import Student  # 生徒モデルをインポート
 
+from django.http import JsonResponse
+
 def search_students(request):
-    query = request.GET.get('query')
-    students = Student.objects.filter(name__icontains=query)  # 名前にクエリが含まれる生徒を検索
-    return render(request, 'log_app/search_results.html', {'students': students, 'query': query})
+    query = request.GET.get('q')
+    if query:
+        results = Student.objects.filter(name__icontains=query)
+        results_list = list(results.values('name', 'age', 'class_name'))  # 適切なフィールドをリスト化
+        return JsonResponse({'results': results_list})
+    return JsonResponse({'results': []})
+
 
 # def login_view(request):
 #     if request.method == 'POST':

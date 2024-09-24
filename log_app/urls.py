@@ -16,7 +16,7 @@ urlpatterns = [
     path('delete-student/<int:pk>/', StudentDelete.as_view(), name='delete-student'),
     path('login/', CaregiverLoginView.as_view(), name='login'),
     path('logout/', LogoutView.as_view(next_page="login"), name='logout'),
-    path('search/', search_students, name='search_students'),  # 検索機能を追加
+    path('search/', views.search_students, name='search_students'),  # 検索用のURLパターン
 ]
 
 
