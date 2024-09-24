@@ -1,0 +1,25 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>日誌記録ページ</title>
+    <link rel="stylesheet" href="{% static 'log_app/css/check_caliculm.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>授業提案ページ</h1>
+        <form method="POST" action="{% url 'check_caliculm' %}">
+            {% csrf_token %}
+            <label for="contact">授業の確認</label>
+            <textarea readonly class="content">{{caliculum}}</textarea>
+            <input type="hidden" name="sheet" value="{{ caliculum }}">
+            <textarea id="message" name="message" rows="2" required style="width: 100%; font-size: large;"></textarea>
+            <div class="check_button">            
+            <button  type="submit" href="{% url  'sheet_complate'%}">送信</button>
+            </div>
+        </form>
+        <a href="{% url 'home'%}">ホームに戻る</a>
+    </div>
+</html>

@@ -13,13 +13,13 @@
         <form id="activityForm" method="POST" action="{% url 'check_sharesheet' %}">
             {% csrf_token %}
             <label for="activity">本日の活動内容</label>
-            <textarea id="activity" name="activity" rows="4">{{activity}}</textarea>
+            <textarea id="activity" name="activity" rows="4" required>{{activity}}</textarea>
 
             <label for="contact">本日の生徒の様子</label>
-            <textarea id="student" name="student" rows="4">{{student}}</textarea>
+            <textarea id="student" name="student" rows="4" required>{{student}}</textarea>
 
             <div class="arrow">
-                <button type="submit" href="{% url 'check_sharesheet'%}">送信</button>
+                <button type="submit">送信</button>
             </div>
         </form>
             <a href="{% url 'home'%}">戻る</a>
