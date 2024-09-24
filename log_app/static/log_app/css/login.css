@@ -1,33 +1,93 @@
 body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
     font-family: Arial, sans-serif;
+    background-color: #f2f2f2; /* 背景色 */
+    margin: 0;
+    padding: 0;
 }
+
+.header {
+    width: 100%;
+    background-color: #6c5ce7; /* おしゃれな色に変更 */
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    color: #fff;
+}
+
+.header .logo {
+    flex-grow: 1; /* 中央配置を実現するために成長させる */
+    text-align: center; /* 中央揃え */
+    font-size: 24px;
+    font-weight: bold;
+    margin: 0;
+}
+
+nav {
+    display: flex; /* ナビゲーションをフレックスボックスに */
+    align-items: center; /* 縦中央揃え */
+}
+
+.button {
+    background-color: #4a90e2; /* ボタンの背景色 */
+    color: white; /* ボタンの文字色 */
+    border: none; /* ボーダーなし */
+    padding: 10px 20px; /* パディング */
+    border-radius: 5px; /* 角を丸く */
+    cursor: pointer; /* カーソルをポインターに */
+    text-decoration: none; /* 下線なし */
+    font-weight: bold; /* 太字 */
+    transition: background-color 0.3s; /* ホバー時の遷移効果 */
+}
+
+.button:hover {
+    background-color: #357ab8; /* ホバー時の背景色 */
+}
+
 .login-box {
-    border: 1px solid black;
+    max-width: 400px; /* 最大幅を設定 */
+    margin: 100px auto; /* 中央揃え */
     padding: 20px;
-    text-align: center;
-    width: 400px;
-    height: 400px;
+    background-color: #fff; /* フォームの背景色 */
+    border-radius: 10px; /* 角を丸く */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* シャドウ効果 */
 }
-.login-box input[type="text"],
-.login-box input[type="password"] {
-    width: 80%;
-    padding: 5px;
-    margin: 20px 0;
-    border: 1px solid black;
+
+.login-box h2 {
+    margin-bottom: 20px; /* ヘッダーの下のマージン */
+    text-align: center; /* 中央揃え */
 }
-.login-box input[type="submit"] {
-    padding: 5px 10px;
-    margin: 20px 0;
-    border: 1px solid black;
-    background-color: white;
-}
+
 .register-link {
-    color: blue;
-    margin-top: 20px;
-    display: block;
+    display: block; /* ブロック表示に */
+    text-align: center; /* 中央揃え */
+    margin-top: 15px; /* 上のマージン */
+    color: #6c5ce7; /* リンク色 */
+    text-decoration: none; /* 下線なし */
+}
+
+.register-link:hover {
+    text-decoration: underline; /* ホバー時に下線 */
+}
+
+.login-box input[type="text"],
+.login-box input[type="password"],
+.login-box input[type="submit"] {
+    width: 100%; /* 幅を100%に */
+    padding: 10px; /* パディング */
+    margin-bottom: 15px; /* 下のマージン */
+    border: 1px solid #ccc; /* ボーダー */
+    border-radius: 5px; /* 角を丸く */
+    box-sizing: border-box; /* ボックスサイズを調整 */
+}
+
+.login-box input[type="submit"] {
+    background-color: #4a90e2; /* ボタンの背景色 */
+    color: white; /* ボタンの文字色 */
+    cursor: pointer; /* カーソルをポインターに */
+}
+
+.login-box input[type="submit"]:hover {
+    background-color: #357ab8; /* ホバー時の背景色 */
 }

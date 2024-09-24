@@ -7,12 +7,17 @@
     <link rel="stylesheet" href="../../static/log_app/css/home.css">
 </head>
 <body>
-    {% if request.user.is_authenticated %}
-        <p>{{ request.user }}さんこんにちは</p>
-        <p><a href="{% url 'logout' %}">ログアウト</a>
-    {% else %}</p>
-        <a href="{% url 'login' %}">ログイン</a>
-    {% endif %}
+    <header class="header">
+        <h1 class="app-title">Smile Log</h1>
+        <div class="auth-links">
+            {% if request.user.is_authenticated %}
+                <p>{{ request.user }}さんこんにちは</p>
+                <a href="{% url 'logout' %}" class="button">ログアウト</a>
+            {% else %}
+                <a href="{% url 'login' %}" class="button">ログイン</a>
+            {% endif %}
+        </div>
+    </header>
 
     <div class="container">
         <h1>Home</h1>
