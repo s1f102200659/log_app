@@ -1,6 +1,6 @@
 from django.urls import path
 from . import views
-from .views import StudentList, StudentDetail, StudentCreate, StudentUpdate, StudentDelete, CaregiverLoginView, search_students  # search_studentsをインポート
+from .views import StudentList, StudentDetail, StudentCreate, StudentUpdate, StudentDelete, CaregiverLoginView
 from django.conf import settings
 from django.contrib.auth.views import LogoutView
 
@@ -16,7 +16,7 @@ urlpatterns = [
     path('delete-student/<int:pk>/', StudentDelete.as_view(), name='delete-student'),
     path('login/', CaregiverLoginView.as_view(), name='login'),
     path('logout/', LogoutView.as_view(next_page="login"), name='logout'),
-    path('search/', views.search_students, name='search_students'),  # 検索用のURLパターン
+    path('students/', StudentList.as_view(), name='student-list'),
 ]
 
 

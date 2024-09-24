@@ -10,34 +10,18 @@
   <h1>StudentList</h1>
   <p>(一応)がついてるのは、園側が管理できるようにするつもり</p>
   <a href="{% url 'create-student' %}">生徒の追加(一応)</a>
+
   <h1>生徒情報検索</h1>
-  <form id="search-form">
-    <input type="text" name="q" placeholder="名前で検索">
+  <form id="search-form" method="GET" action="">
+    <input type="text" name="query" placeholder="名前で検索" value="{{ request.GET.query }}">
     <button type="submit">検索</button>
-</form>
+  </form>
 
-<div id="search-results">
+  <div id="search-results">
     <!-- 検索結果がここに表示されます -->
-</div>
+  </div>
 
-<script>
-    document.getElementById('search-form').addEventListener('submit', function(event) {
-        event.preventDefault();  // フォームのデフォルトの動作を止める
-        var query = document.querySelector('input[name="q"]').value;
-        
-        fetch(`/search/?q=${query}`)
-        .then(response => response.json())
-        .then(data => {
-            var resultsDiv = document.getElementById('search-results');
-            resultsDiv.innerHTML = '';  // 結果をクリア
-            data.results.forEach(function(result) {
-                var resultItem = document.createElement('div');
-                resultItem.textContent = `名前: ${result.name}, 年齢: ${result.age}, クラス: ${result.class_name}`;
-                resultsDiv.appendChild(resultItem);
-            });
-        });
-    });
-</script>
+
 
   <table>
     <tr>

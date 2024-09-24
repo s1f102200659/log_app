@@ -61,17 +61,22 @@ class CaregiverLoginView(LoginView):
         return reverse_lazy('home')
 
 from django.shortcuts import render
-from .models import Student  # 生徒モデルをインポート
+from .models import Student
+from django.views.generic import ListView
 
-from django.http import JsonResponse
+class StudentList(ListView):
+    template_name = 'log_app/student_list.html'  # テンプレート名を適宜変更
+    context_object_name = 'students'  # テンプレート内での変数名
 
-def search_students(request):
-    query = request.GET.get('q')
-    if query:
-        results = Student.objects.filter(name__icontains=query)
-        results_list = list(results.values('name', 'age', 'class_name'))  # 適切なフィールドをリスト化
-        return JsonResponse({'results': results_list})
-    return JsonResponse({'results': []})
+    def get_queryset(self):
+        query = self.request.GET.get('query')
+        if query:
+            student_list = Student.objects.filter(name__icontains=query)
+        else:
+            student_list = Student.objects.all()
+        return student_list
+
+
 
 
 # def login_view(request):
