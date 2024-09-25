@@ -1,12 +1,14 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>日誌記録ページ</title>
     <link rel="stylesheet" href="{% static 'log_app/css/make_sharesheet.css' %}">
 </head>
+
 <body>
     <div class="container">
         <h1>日誌記録ページ</h1>
@@ -22,6 +24,7 @@
                 <button type="submit" href="{% url 'check_sharesheet'%}">送信</button>
             </div>
         </form>
-            <a href="{% url 'home'%}">戻る</a>
+        <a href="{% url 'caregiver_dashboard'%}">戻る</a>
     </div>
+
 </html>

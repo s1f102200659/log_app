@@ -1,0 +1,7 @@
+<h1>保育士削除</h1>
+<p>本当に "{{ object.username }}" を削除しますか？</p>
+<form method="post">
+  {% csrf_token %}
+  <button type="submit">削除</button>
+  <a href="{% url 'caregiver_list' %}">キャンセル</a>
+</form>

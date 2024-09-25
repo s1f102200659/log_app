@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
   <link rel="stylesheet" href="../../static/log_app/css/student.css">
 </head>
+
 <body>
   <ul>
     <li><strong>保育園:</strong> {{ student.kindergarten }}</li>
@@ -15,8 +17,12 @@
     <li><strong>生年月日:</strong> {{ student.birth_date }}</li>
     <li><strong>アレルギー:</strong> {{ student.allergy_info }}</li>
     <li><strong>追記:</strong> {{ student.additional_info }}</li>
-  <p><a href="{% url 'students'%}">戻る</a></p>
-</ul>
+    {% if request.user.role == 'admin' %}
+    <p><a href="{% url 'admin_dashboard' %}">戻る</a></p>
+    {% elif request.user.role == 'caregiver' %}
+    <p><a href="{% url 'caregiver_students' %}">戻る</a></p>
+    {% endif %}
+  </ul>
 </body>
-</html>
 
+</html>

@@ -1,0 +1,24 @@
+<h1>園情報一覧</h1>
+<!-- <a href="{% url 'create-kindergarten' %}">園情報の追加</a> -->
+<table>
+  <tr>
+    <th>ID</th>
+    <th>園名</th>
+    <th>郵便番号</th>
+    <th>方針</th>
+    <th></th>
+  </tr>
+  {% for kindergarten in kindergartens %}
+  <tr>
+    <td>{{ kindergarten.id }}</td>
+    <td>{{ kindergarten.name }}</td>
+    <td>{{ kindergarten.postal_code }}</td>
+    <td>{{ kindergarten.policy }}</td>
+    <td>
+      <a href="{% url 'edit-kindergarten' kindergarten.pk %}">編集</a>
+      <!-- <a href="{% url 'delete-kindergarten' kindergarten.id %}">削除</a> -->
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+<a href="{% url 'admin_dashboard' %}">戻る</a>

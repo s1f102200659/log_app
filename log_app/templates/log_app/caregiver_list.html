@@ -1,0 +1,24 @@
+<h1>保育士一覧</h1>
+<a href="{% url 'create-caregiver' %}">保育士の追加</a>
+<table>
+  <tr>
+    <th>ID</th>
+    <th>ユーザー名</th>
+    <th>名前</th>
+    <th>メールアドレス</th>
+    <th>アクション</th>
+  </tr>
+  {% for caregiver in caregivers %}
+  <tr>
+    <td>{{ caregiver.id }}</td>
+    <td>{{ caregiver.username }}</td>
+    <td>{{ caregiver.first_name }} {{ caregiver.last_name }}</td>
+    <td>{{ caregiver.email }}</td>
+    <td>
+      <a href="{% url 'edit-caregiver' caregiver.id %}">編集</a> |
+      <a href="{% url 'delete-caregiver' caregiver.id %}">削除</a>
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+<a href="{% url 'admin_dashboard' %}">戻る</a>
