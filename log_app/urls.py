@@ -5,10 +5,13 @@ from django.conf import settings
 from django.contrib.auth.views import LogoutView
 
 urlpatterns = [
-    path('', views.login),
-    path('home/', views.home, name='home'),
-    path('make_sharesheet', views.make_sharesheet, name='sharesheet'),
+    path('',views.login),
+    path('home/',views.home, name='home'),
+    path('make_sharesheet',views.make_sharesheet, name='sharesheet'),
+    path('check_sharesheet',views.check_sharesheet,name='check_sharesheet'),
+    path('sheet_complate',views.complate,name='sheet_complate'),
     path('make_caliculm', views.make_caliculm, name='caliculm'),
+    path('check/caliculm',views.check_caliculm,name='check_caliculm'),
     path('student_info', StudentList.as_view(), name='students'),
     path('student/<int:pk>/', StudentDetail.as_view(), name='student'),
     path('create-student/', StudentCreate.as_view(), name='create-student'),

@@ -38,7 +38,7 @@ textarea {
 }
 textarea {
     resize: vertical;
-    height: 150px; /* テキストエリアの高さを指定 */
+    height: 300px; /* テキストエリアの高さを指定 */
 }
 /* 矢印リンクのスタイル */
 .arrow {
