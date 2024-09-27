@@ -1,3 +1,4 @@
+{% load static %}
 {% if user.is_authenticated %}
 {% if user.role == 'admin' %}
 <a href="{% url 'admin_dashboard' %}">管理者ダッシュボード</a>

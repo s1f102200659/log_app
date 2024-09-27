@@ -1,3 +1,4 @@
+{% load static %}
 <h1>{% if object %}保育士編集{% else %}保育士追加{% endif %}</h1>
 <form method="post">
   {% csrf_token %}

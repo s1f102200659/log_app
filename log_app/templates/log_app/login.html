@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="ja">
 
@@ -6,9 +7,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Form</title>
     <link rel="stylesheet" href="../../static/log_app/css/login.css">
+    <script src="{% static 'js/header.js' %}"></script>
 </head>
 
 <body>
+    <header><div id="header"></div></header>
+  <div class="container-fluid" style="padding-left: 0; padding-right: 0;"> 
+    <div class="row g-0"> 
+        <div style="background-color: rgb(255, 238, 240); padding-left: 0; padding-right: 0;" class="col-2"></div>
+        <div class="col-8" style="padding-left: 0; padding-right: 0;">
     <div class="login-box">
         <h2>Login</h2>
         <form action="" method="POST">
@@ -18,6 +25,10 @@
         </form>
         <a href="#" class="register-link">ご登録はこちらから</a>
     </div>
+</div>
+<div style="background-color: rgb(255, 238, 240); padding-left: 0; padding-right: 0;" class="col-2"></div>
+</div>
+</div>
 </body>
 
 </html>

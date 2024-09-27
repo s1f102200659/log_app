@@ -6,7 +6,7 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.views import LoginView
 from .forms import *
 from langchain.agents import Tool, initialize_agent, AgentType
-# from langchain.chat_models import ChatOpenAI
+from langchain.chat_models import ChatOpenAI
 from langchain.llms import OpenAI
 from langchain.schema import AIMessage, HumanMessage, SystemMessage
 import json
@@ -30,6 +30,9 @@ from log_app.models import Student, Kindergarten
 from django.contrib.auth import get_user_model
 User = get_user_model()
 
+def header_view(request):
+    return render(request, 'header.html')
+
 def make_sharesheet(request):
     if request.method == 'GET':
         return render(request, 'log_app/make_sharesheet.html')
@@ -42,7 +45,7 @@ def make_caliculm(request):
     if request.method == 'GET':
         return render(request, 'log_app/make_caliculm.html')
 def check_caliculm(request):
-    OPENAI_API_KEY = 'jptUUSqsAl373RSLiVEJikQWrPbmXporpm-7se2-qKAdtPIHowCU0Bt605FdtxcN5gRASDAksqzM7wyLZxzx02Q'
+    OPENAI_API_KEY = 'TDao2F3EyHP9wlw7unKFrZzwTdCXCmwg5ZrjgfwuDP8-u4H1bMvW2AmlDp6-3x8fuObJZ8bm0TwxrWFi2LMu3YA'
     OPENAI_API_BASE = 'https://api.openai.iniad.org/api/v1'
     chat = ChatOpenAI(openai_api_key=OPENAI_API_KEY, openai_api_base=OPENAI_API_BASE, model_name='gpt-4o-mini', temperature=0)
     if request.method == 'POST':
@@ -90,7 +93,7 @@ def check_caliculm(request):
                     # 他の情報を取得
                     temp = forecast['main'].get('temp', '情報なし')
                     humidity = forecast['main'].get('humidity', '情報なし')
-                    weather_description = forecast['weather'][0].get('description', '情報なし')
+                    weather_description = forecast['weather'][0].get('main', '情報なし')
                     result += f"日時: {dt_jst.strftime('%Y-%m-%d %H:%M:%S')}, 気温: {temp}°C, 湿度: {humidity}%, 天気: {weather_description}" + "\n"
             else:
                 print(f"エラー: {res.status_code}, {res.json()}")
@@ -155,12 +158,12 @@ def check_sharesheet(request):
                     # 他の情報を取得
                     temp = forecast['main'].get('temp', '情報なし')
                     humidity = forecast['main'].get('humidity', '情報なし')
-                    weather_description = forecast['weather'][0].get('description', '情報なし')
+                    weather_description = forecast['weather'][0].get('main', '情報なし')
                     result += f"日時: {dt_jst.strftime('%Y-%m-%d %H:%M:%S')}, 気温: {temp}°C, 湿度: {humidity}%, 天気: {weather_description}" + "\n"
                 today = f"日時: {dt_jst.strftime('%Y-%m-%d %H:%M:%S')}, 気温: {temp}°C, 湿度: {humidity}%, 天気: {weather_description}"
             else:
                 print(f"エラー: {res.status_code}, {res.json()}")
-            OPENAI_API_KEY = 'jptUUSqsAl373RSLiVEJikQWrPbmXporpm-7se2-qKAdtPIHowCU0Bt605FdtxcN5gRASDAksqzM7wyLZxzx02Q'
+            OPENAI_API_KEY = 'TDao2F3EyHP9wlw7unKFrZzwTdCXCmwg5ZrjgfwuDP8-u4H1bMvW2AmlDp6-3x8fuObJZ8bm0TwxrWFi2LMu3YA'
             OPENAI_API_BASE = 'https://api.openai.iniad.org/api/v1'
             chat = ChatOpenAI(openai_api_key=OPENAI_API_KEY, openai_api_base=OPENAI_API_BASE, model_name='gpt-4o-mini', temperature=0)
             kyouyuu = [
