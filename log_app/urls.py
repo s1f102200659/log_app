@@ -8,18 +8,16 @@ from .views import (
     )
 from django.conf import settings
 from django.contrib.auth.views import LogoutView
-# from django.conf.urls.static import static
-
 
 urlpatterns = [
     path('',include('accounts.urls', namespace='accounts')),
 
     # path('home/',views.home, name='home'),
     path('make_sharesheet',views.make_sharesheet, name='sharesheet'),
+    path('check_sharesheet',views.check_sharesheet,name='check_sharesheet'),
     path('sheet_complate',views.complate,name='sheet_complate'),
     path('make_caliculm', views.make_caliculm, name='caliculm'),
-    path('check_sharesheet',views.check_sharesheet,name='check_sharesheet'),
-
+    path('check/caliculm',views.check_caliculm,name='check_caliculm'),
     path('student_info', StudentList.as_view(), name='students'),
     path('caregiver/student_info/', CaregiverStudentList.as_view(), name='caregiver_students'),
     path('student/<int:pk>/', StudentDetail.as_view(), name='student'),
@@ -41,7 +39,11 @@ urlpatterns = [
 
     path('admin_dashboard/', admin_dashboard, name='admin_dashboard'),
     path('caregiver_dashboard/', caregiver_dashboard, name='caregiver_dashboard'),
+    path('login/', CaregiverLoginView.as_view(), name='login'),
+    path('logout/', LogoutView.as_view(next_page="login"), name='logout'),
+    path('students/', StudentList.as_view(), name='student-list'),
 ]
+
 
 
     # path('', PostList.as_view(), name='posts'),

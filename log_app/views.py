@@ -4,7 +4,7 @@ from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.views import LoginView
-from .forms import ActivityForm
+from .forms import *
 from langchain.agents import Tool, initialize_agent, AgentType
 # from langchain.chat_models import ChatOpenAI
 from langchain.llms import OpenAI
@@ -14,6 +14,7 @@ import os
 import requests
 from datetime import datetime, timedelta
 import pytz
+
 # from django.contrib.auth import authenticate, login
 # from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.decorators import login_required, user_passes_test
@@ -38,6 +39,74 @@ def make_sharesheet(request):
         student = request.POST.get('student')
         return render(request, 'log_app/make_sharesheet.html',{'activity':activity,'student':student})
 def make_caliculm(request):
+    if request.method == 'GET':
+        return render(request, 'log_app/make_caliculm.html')
+def check_caliculm(request):
+    OPENAI_API_KEY = 'jptUUSqsAl373RSLiVEJikQWrPbmXporpm-7se2-qKAdtPIHowCU0Bt605FdtxcN5gRASDAksqzM7wyLZxzx02Q'
+    OPENAI_API_BASE = 'https://api.openai.iniad.org/api/v1'
+    chat = ChatOpenAI(openai_api_key=OPENAI_API_KEY, openai_api_base=OPENAI_API_BASE, model_name='gpt-4o-mini', temperature=0)
+    if request.method == 'POST':
+        sendedform = SendedForm(request.POST)
+        form = CaliculumForm(request.POST)
+        if sendedform.is_valid():
+            caliculum_text = sendedform.cleaned_data['sheet']
+            message = sendedform.cleaned_data['message']
+            talk = [
+                HumanMessage(content= caliculum_text + message)
+            ]
+            return render(request,'log_app/check_caliculm.html',{'caliculum':chat(talk).content})
+        elif form.is_valid():
+            # フォームの処理
+            date = form.cleaned_data['date']
+            text = form.cleaned_data['objective']
+            # OpenWeatherMapのAPIエンドポイント
+            url = "https://api.openweathermap.org/data/2.5/forecast"
+            # 有効なAPIキーをここに入れてください
+            api_key = "88024955f764f1628b85fc6e7177425d"
+            result = ""
+            # パラメータの設定
+            params = {
+                "APPID": api_key,
+                "units": "metric",
+                "zip": "167-0053,jp",
+                "lang": "ja"  # 日本語のレスポンスを取得するためのパラメータ
+            }
+            # APIへのリクエストを送信
+            res = requests.get(url, params=params)
+            if res.status_code == 200:
+                # レスポンスのJSONデータを取得
+                weather_data = res.json()
+                # 3時間ごとの予報リストを取得
+                forecast_list = weather_data.get('list', [])
+                # タイムゾーンの設定
+                utc_timezone = pytz.timezone("UTC")
+                jst_timezone = pytz.timezone("Asia/Tokyo")
+                for forecast in forecast_list[:3]:
+                    # UTC日時を取得し、日本時間に変換
+                    dt_txt_utc = forecast.get('dt_txt', '情報なし')
+                    dt_utc = datetime.strptime(dt_txt_utc, '%Y-%m-%d %H:%M:%S')
+                    dt_utc = utc_timezone.localize(dt_utc)  # UTCタイムゾーンを付加
+                    dt_jst = dt_utc.astimezone(jst_timezone)  # 日本時間に変換
+                    # 他の情報を取得
+                    temp = forecast['main'].get('temp', '情報なし')
+                    humidity = forecast['main'].get('humidity', '情報なし')
+                    weather_description = forecast['weather'][0].get('description', '情報なし')
+                    result += f"日時: {dt_jst.strftime('%Y-%m-%d %H:%M:%S')}, 気温: {temp}°C, 湿度: {humidity}%, 天気: {weather_description}" + "\n"
+            else:
+                print(f"エラー: {res.status_code}, {res.json()}")
+            caliculum = [
+                HumanMessage(content= f"""
+                            -今日の天気-{result}
+                            -生徒の特長-
+                            1. *春樹くん*: 元気に走り回っていることから、活発でエネルギッシュな性格を持っている。
+                            2. *健くん*: 「今日も元気いっぱい」とあるように、常に元気で明るい性格の持ち主である。
+                            3. *はるかちゃん*: お人形遊びをしていることから、想像力が豊かで、遊びや芸術的な活動を楽しむ傾向がある。
+                            4. *唯ちゃん*: はるかちゃんと一緒にお人形遊びをしているため、友達と協力して遊ぶことを楽しむ社交的な性格が示唆される。
+                            -狙い-{text}
+                            今日の日付と天気、気温、生徒の性格を考慮して今日の保育園での授業内容を10個考えてください
+                            """)
+            ]
+            return render(request,'log_app/check_caliculm.html',{'caliculum':chat(caliculum).content})
     return render(request, 'log_app/make_caliculm.html')
 
 def complate(request):
@@ -117,6 +186,7 @@ def check_sharesheet(request):
             + "-生徒の活動-" + student)
             ]
             return render(request,'log_app/check_sharesheet.html',{'sheet':chat(kyouyuu).content,'activity':activity,'student':student})# 処理後のリダイレクト
+    
     else:
         message = """今から送る情報を元に、以下の形式で生徒の情報を1つのjson形式のオブジェクトとしてまとめて返してください。まとめる際は、一つ一つの要素を,で分けてください。
         key:生徒の名前,データ:その生徒の特長 例）{"エリカ":"砂遊びが好き。", "ショウ":"本を読むのがすき", "ケン":"友達とサッカーをしていた", "美穂":"りかとあゆみと遊んでいた"}
@@ -293,6 +363,31 @@ class CaregiverLoginView(LoginView):
 @user_passes_test(is_admin)
 def admin_dashboard(request):
     return render(request, 'log_app/admin_dashboard.html')
+
+from django.shortcuts import render
+from .models import Student
+from django.views.generic import ListView
+
+class StudentList(ListView):
+    template_name = 'log_app/student_list.html'  # テンプレート名を適宜変更
+    context_object_name = 'students'  # テンプレート内での変数名
+
+    def get_queryset(self):
+        query = self.request.GET.get('query')
+        if query:
+            student_list = Student.objects.filter(name__icontains=query)
+        else:
+            student_list = Student.objects.all()
+        return student_list
+
+
+
+
+# def login_view(request):
+#     if request.method == 'POST':
+#         username = request.POST['username']
+#         password = request.POST['password']
+#         user = authenticate(request, username=username, password=password)
 
 @login_required
 @user_passes_test(is_caregiver)
