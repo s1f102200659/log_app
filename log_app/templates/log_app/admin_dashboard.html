@@ -1,0 +1,19 @@
+{% csrf_token %}
+<h1>管理者ダッシュボード</h1>
+{% if request.user.is_authenticated %}
+<p>{{ request.user }}さん、ようこそ管理者ダッシュボードへ。</p>
+<p><a href="{% url 'accounts:logout' %}">ログアウト</a>
+  {% endif %}
+
+
+  <div class="dashboard-links">
+    <div class="link-item">
+      <a href="{% url 'kindergarten_list' %}" class="button">園情報管理</a>
+    </div>
+    <div class="link-item">
+      <a href="{% url 'caregiver_list' %}" class="button">保育士管理</a>
+    </div>
+    <div class="link-item">
+      <a href="{% url 'students' %}" class="button">生徒情報管理</a>
+    </div>
+  </div>

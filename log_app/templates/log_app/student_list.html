@@ -1,15 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
   <link rel="stylesheet" href="../../static/log_app/css/list.css">
 </head>
+
 <body>
   <h1>StudentList</h1>
-  <p>(一応)がついてるのは、園側が管理できるようにするつもり</p>
-  <a href="{% url 'create-student' %}">生徒の追加(一応)</a>
+  {% if request.user.role == 'admin' %}
+  <a href="{% url 'create-student' %}">生徒の追加</a>
+  {% endif %}
 
   <h1>生徒情報検索</h1>
   <form id="search-form" method="GET" action="">
@@ -20,9 +23,6 @@
   <div id="search-results">
     <!-- 検索結果がここに表示されます -->
   </div>
-
-
-
   <table>
     <tr>
       <th>園ID</th>
@@ -32,22 +32,35 @@
       <th>生年月日</th>
       <th>アレルギー</th>
       <th>追記</th>
+      <th></th>
+      {% if request.user.role == 'admin' %}
+      <th></th>
+      <th></th>
+      {% endif %}
+
     </tr>
     {% for student in students %}
     <tr>
-      <td>{{ student.kindergarten }}</td>
-      <td>{{ student.student_id }}</td>
+      <td>{{ student.kindergarten.id }}</td>
+      <td>{{ student.id }}</td>
       <td>{{ student.name }}</td>
       <td>{{ student.caregiver }}</td>
       <td>{{ student.birth_date }}</td>
       <td>{{ student.allergy_info }}</td>
       <td>{{ student.additional_info }}</td>
-      <td><a href="{% url 'student' student.student_id %}">確認</a></td>
-      <td><a href="{% url 'edit-student' student.student_id %}">編集(一応)</a></td>
-      <td><a href="{% url 'delete-student' student.student_id %}">削除(一応)</a></td>
+      <td><a href="{% url 'student' student.pk %}">確認</a></td>
+      {% if request.user.role == 'admin' %}
+      <td><a href="{% url 'edit-student' student.pk %}">編集</a></td>
+      <td><a href="{% url 'delete-student' student.pk %}">削除</a></td>
+      {% endif %}
     </tr>
     {% endfor %}
   </table>
-  <p><a href="{% url 'home'%}">戻る</a></p>
+  {% if request.user.role == 'admin' %}
+  <p><a href="{% url 'admin_dashboard' %}">戻る</a></p>
+  {% elif request.user.role == 'caregiver' %}
+  <p><a href="{% url 'caregiver_dashboard' %}">戻る</a></p>
+  {% endif %}
 </body>
+
 </html>

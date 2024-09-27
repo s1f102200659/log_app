@@ -1,0 +1,7 @@
+<h1>{% if object %}保育士編集{% else %}保育士追加{% endif %}</h1>
+<form method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">保存</button>
+</form>
+<a href="{% url 'caregiver_list' %}">キャンセル</a>
