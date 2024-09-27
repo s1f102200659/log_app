@@ -6,19 +6,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>日誌記録ページ</title>
-    <link rel="stylesheet" href="{% static 'log_app/css/make_sharesheet.css' %}">
+    <link rel="stylesheet" href="{% static 'log_app/css/sharesheet.css' %}">
+    <script src="{% static 'js/header.js' %}"></script>
 </head>
 
 <body>
+    <header><div id="header"></div></header>
+  <div class="container-fluid" style="padding-left: 0; padding-right: 0;"> 
+    <div class="row g-0"> 
+        <div style="background-color: rgb(255, 238, 240); padding-left: 0; padding-right: 0;" class="col-2"></div>
+        <div class="col-8" style="padding-left: 0; padding-right: 0;">
     <div class="container">
         <h1>日誌記録ページ</h1>
         <form id="activityForm" method="POST" action="{% url 'check_sharesheet' %}">
             {% csrf_token %}
             <label for="activity">本日の活動内容</label>
-            <textarea id="activity" name="activity" rows="4" required>{{activity}}</textarea>
+            <textarea class="textarea_content" id="activity" name="activity" rows="4" required>{{activity}}</textarea>
 
             <label for="contact">本日の生徒の様子</label>
-            <textarea id="student" name="student" rows="4" required>{{student}}</textarea>
+            <textarea class="textarea_content" id="student" name="student" rows="4" required>{{student}}</textarea>
 
             <div class="arrow">
                 <button type="submit">送信</button>
@@ -26,5 +32,8 @@
         </form>
         <a href="{% url 'caregiver_dashboard'%}">戻る</a>
     </div>
-
+</div>
+<div style="background-color: rgb(255, 238, 240); padding-left: 0; padding-right: 0;" class="col-2"></div>
+</div>
+</div>
 </html>

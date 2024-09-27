@@ -5,15 +5,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>日誌記録ページ</title>
-    <link rel="stylesheet" href="{% static 'log_app/css/check_sharesheet.css' %}">
+    <link rel="stylesheet" href="{% static 'log_app/css/sharesheet.css' %}">
+    <script src="{% static 'js/header.js' %}"></script>
 </head>
 <body>
+    <header><div id="header"></div></header>
+  <div class="container-fluid" style="padding-left: 0; padding-right: 0;"> 
+    <div class="row g-0"> 
+        <div style="background-color: rgb(255, 238, 240); padding-left: 0; padding-right: 0;" class="col-2"></div>
+        <div class="col-8" style="padding-left: 0; padding-right: 0;">
     <div class="container">
         <h1>日誌記録ページ</h1>
         <form method="POST" action="{% url 'sheet_complate' %}">
             {% csrf_token %}
             <label for="contact">日誌の確認</label>
-            <textarea readonly>{{sheet}}</textarea>
+            <textarea class="textarea_content" style="min-height:400px ;" readonly>{{sheet}}</textarea>
             <div class="check_button">
             <input type="hidden" name="sheet" value="{{ sheet }}">
                 <button  type="submit" href="{% url  'sheet_complate'%}">この内容で問題なし</button>
@@ -26,4 +32,8 @@
             <button type="submit" href="{% url 'sharesheet'%}">入力に戻る</button>
         </form>
     </div>
+</div>
+<div style="background-color: rgb(255, 238, 240); padding-left: 0; padding-right: 0;" class="col-2"></div>
+</div>
+</div>
 </html>

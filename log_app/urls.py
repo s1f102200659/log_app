@@ -11,7 +11,7 @@ from django.contrib.auth.views import LogoutView
 
 urlpatterns = [
     path('',include('accounts.urls', namespace='accounts')),
-
+    path('header/url/', views.header_view, name='header'),
     # path('home/',views.home, name='home'),
     path('make_sharesheet',views.make_sharesheet, name='sharesheet'),
     path('check_sharesheet',views.check_sharesheet,name='check_sharesheet'),

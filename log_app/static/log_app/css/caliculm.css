@@ -2,10 +2,9 @@
 /* コンテナのスタイル */
 .container {
     max-width: 600px;
-    margin: 50px auto;
     padding: 20px;
     border-radius: 8px;
-    background-color: #F9F9F9;
+    background-color: #F9FFFF;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 /* タイトルのスタイル */
@@ -22,23 +21,23 @@ label {
     font-weight: bold;
     color: #555;
 }
-/* テキストインプットとテキストエリアのスタイル */
-input[type="text"],
-input[type="date"],
-textarea {
+.date_content{
+    width: 100%;
+    margin-bottom: 25px;
+    border: 3px solid #b8b8b8;
+}
+.textarea_content {
     width: 100%;
     padding: 10px;
     margin-bottom: 25px; /* 間隔を広げるためにmargin-bottomを調整 */
-    border: 1px solid #ddd;
-    border-radius: 4px;
+    border: 3px solid #b8b8b8;
+    border-radius: 10px;
     box-sizing: border-box;
     font-size: 16px;
     background-color: #fff;
     color: #333;
-}
-textarea {
-    resize: vertical;
-    height: 300px; /* テキストエリアの高さを指定 */
+    height: 300px;
+    resize: none;
 }
 /* 矢印リンクのスタイル */
 .arrow {

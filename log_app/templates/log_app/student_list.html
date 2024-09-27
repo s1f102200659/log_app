@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,9 +7,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
   <link rel="stylesheet" href="../../static/log_app/css/list.css">
+  <script src="{% static 'js/header.js' %}"></script>
 </head>
 
 <body>
+  <header><div id="header"></div></header>
+  <div class="container-fluid" style="padding-left: 0; padding-right: 0;"> 
+    <div class="row g-0"> 
+        <div style="background-color: rgb(255, 238, 240); padding-left: 0; padding-right: 0;" class="col-2"></div>
+        <div class="col-8" style="padding-left: 0; padding-right: 0;">
   <h1>StudentList</h1>
   {% if request.user.role == 'admin' %}
   <a href="{% url 'create-student' %}">生徒の追加</a>
@@ -61,6 +68,10 @@
   {% elif request.user.role == 'caregiver' %}
   <p><a href="{% url 'caregiver_dashboard' %}">戻る</a></p>
   {% endif %}
+</div>
+<div style="background-color: rgb(255, 238, 240); padding-left: 0; padding-right: 0;" class="col-2"></div>
+</div>
+</div>
 </body>
 
 </html>
