@@ -242,6 +242,25 @@ class CaregiverLoginView(LoginView):
     def get_success_url(self):
         return reverse_lazy('home')
 
+from django.shortcuts import render
+from .models import Student
+from django.views.generic import ListView
+
+class StudentList(ListView):
+    template_name = 'log_app/student_list.html'  # テンプレート名を適宜変更
+    context_object_name = 'students'  # テンプレート内での変数名
+
+    def get_queryset(self):
+        query = self.request.GET.get('query')
+        if query:
+            student_list = Student.objects.filter(name__icontains=query)
+        else:
+            student_list = Student.objects.all()
+        return student_list
+
+
+
+
 # def login_view(request):
 #     if request.method == 'POST':
 #         username = request.POST['username']
