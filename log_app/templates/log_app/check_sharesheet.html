@@ -22,14 +22,16 @@
             <textarea class="textarea_content" style="min-height:400px ;" readonly>{{sheet}}</textarea>
             <div class="check_button">
             <input type="hidden" name="sheet" value="{{ sheet }}">
-                <button  type="submit" href="{% url  'sheet_complate'%}">この内容で問題なし</button>
+                <div class="submit_button">
+                    <button class="Button-style">送信する</button>
+                </div>
             </div>
         </form>
         <form method="POST" action="{% url 'sharesheet' %}">
             {% csrf_token %}
             <input type="hidden" name="activity" value="{{ activity }}">
             <input type="hidden" name="student" value="{{ student }}">
-            <button type="submit" href="{% url 'sharesheet'%}">入力に戻る</button>
+            <button type="submit" class="btn btn-primary" href="{% url 'sharesheet'%}">入力に戻る</button>
         </form>
     </div>
 </div>

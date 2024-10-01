@@ -62,20 +62,7 @@ h2 {
     margin: 0 10px;
 }
 
-.circle {
-    width: 100px;
-    height: 100px;
-    background-color: #4a90e2; /* 青系の背景 */
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: white;
-    font-size: 24px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    transition: transform 0.3s;
-}
-
-.circle:hover {
-    transform: scale(1.1);
+.circle_img{
+    width: 70%;
+    height: auto;
 }

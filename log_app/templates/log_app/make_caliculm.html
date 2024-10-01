@@ -21,14 +21,14 @@
     <form id="activityForm" method="POST" action="{% url 'check_caliculm' %}">
     {% csrf_token %}
       <label for="date">日付</label><br>
-      <input class="date_content" type="date" id="date" name="date" required><br>
+      <input class="date-input" type="date" id="date" name="date" required><br>
       <label for="objective">本日のねらい</label>
       <textarea class="textarea_content" id="objective" name="objective" rows="4" required></textarea>
-      <div class="arrow">
-        <button type="submit">送信</button>
+      <div style="text-align: center;">
+        <button type="submit" class="Button-style">送信</button>
       </div>
     </form>
-    <p><a href="{% url 'caregiver_dashboard'%}">戻る</a></p>
+    <a class="btn btn-primary" style="text-align: left;" href="{% url 'caregiver_dashboard'%}">ホームに戻る</a>
 </div>
 </div>
 <div style="background-color: rgb(255, 238, 240); padding-left: 0; padding-right: 0;" class="col-2"></div>

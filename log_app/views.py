@@ -45,7 +45,7 @@ def make_caliculm(request):
     if request.method == 'GET':
         return render(request, 'log_app/make_caliculm.html')
 def check_caliculm(request):
-    OPENAI_API_KEY = 'TDao2F3EyHP9wlw7unKFrZzwTdCXCmwg5ZrjgfwuDP8-u4H1bMvW2AmlDp6-3x8fuObJZ8bm0TwxrWFi2LMu3YA'
+    OPENAI_API_KEY = 'BKMA5OSyagKotNi3aLvOc8pHDXN_DmhBCCtOHAl8A7OFVe48Yg3NqKam7eFbWdLRdTPIMceRfBr22WVZOui2zYw'
     OPENAI_API_BASE = 'https://api.openai.iniad.org/api/v1'
     chat = ChatOpenAI(openai_api_key=OPENAI_API_KEY, openai_api_base=OPENAI_API_BASE, model_name='gpt-4o-mini', temperature=0)
     if request.method == 'POST':
@@ -163,7 +163,7 @@ def check_sharesheet(request):
                 today = f"日時: {dt_jst.strftime('%Y-%m-%d %H:%M:%S')}, 気温: {temp}°C, 湿度: {humidity}%, 天気: {weather_description}"
             else:
                 print(f"エラー: {res.status_code}, {res.json()}")
-            OPENAI_API_KEY = 'TDao2F3EyHP9wlw7unKFrZzwTdCXCmwg5ZrjgfwuDP8-u4H1bMvW2AmlDp6-3x8fuObJZ8bm0TwxrWFi2LMu3YA'
+            OPENAI_API_KEY = 'BKMA5OSyagKotNi3aLvOc8pHDXN_DmhBCCtOHAl8A7OFVe48Yg3NqKam7eFbWdLRdTPIMceRfBr22WVZOui2zYw'
             OPENAI_API_BASE = 'https://api.openai.iniad.org/api/v1'
             chat = ChatOpenAI(openai_api_key=OPENAI_API_KEY, openai_api_base=OPENAI_API_BASE, model_name='gpt-4o-mini', temperature=0)
             kyouyuu = [

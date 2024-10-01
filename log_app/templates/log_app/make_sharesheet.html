@@ -26,11 +26,11 @@
             <label for="contact">本日の生徒の様子</label>
             <textarea class="textarea_content" id="student" name="student" rows="4" required>{{student}}</textarea>
 
-            <div class="arrow">
-                <button type="submit">送信</button>
+            <div class="submit_button">
+                <button class="Button-style" type="submit">送信</button>
             </div>
         </form>
-        <a href="{% url 'caregiver_dashboard'%}">戻る</a>
+        <a type="button" class="btn btn-primary" href="{% url 'caregiver_dashboard'%}">ホームに戻る</a>
     </div>
 </div>
 <div style="background-color: rgb(255, 238, 240); padding-left: 0; padding-right: 0;" class="col-2"></div>
