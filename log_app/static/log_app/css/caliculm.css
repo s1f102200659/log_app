@@ -21,11 +21,7 @@ label {
     font-weight: bold;
     color: #555;
 }
-.date_content{
-    width: 100%;
-    margin-bottom: 25px;
-    border: 3px solid #b8b8b8;
-}
+
 .textarea_content {
     width: 100%;
     padding: 10px;
@@ -91,3 +87,40 @@ a[href*="delete-student"]:hover,
 a[href*="home"]:hover {
     background-color: #0056B3;
 }
+.date-input {
+    appearance: none; /* ブラウザデフォルトのスタイルを無効化 */
+    border: none;
+    padding: 10px 15px;
+    font-size: 16px;
+    font-family: Arial, sans-serif;
+    background-color: white;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-bottom: 25px;
+    width: 50%;
+}
+
+/* ホバー時の効果 */
+.date-input:hover {
+    background-color: #e0e0e0;
+}
+
+/* フォーカス時の効果 */
+.date-input:focus {
+    outline: none;
+    background-color: #fff;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+}
+
+.Button-style {
+    font-family: "Modak", cursive;
+    font-size: 20px;
+    display: inline-block;
+    padding: 0.2em 1em 0.1em;
+    color: #ff0066;
+    border: solid 2px #ff0066;
+    border-radius: 5px;
+    background-color: #fff0f8;
+    cursor: pointer;
+  }

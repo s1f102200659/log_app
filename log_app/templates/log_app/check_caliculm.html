@@ -22,11 +22,11 @@
             <textarea class="textarea_content" readonly class="content">{{caliculum}}</textarea>
             <input type="hidden" name="sheet" value="{{ caliculum }}">
             <textarea id="message" name="message" rows="2" required style="width: 100%; font-size: large;"></textarea>
-            <div class="check_button">            
-            <button  type="submit" href="{% url  'sheet_complate'%}">送信</button>
+            <div style="text-align: center;">            
+            <button  type="submit" class="Button-style" href="{% url  'sheet_complate'%}">送信</button>
             </div>
         </form>
-        <a href="{% url 'caregiver_dashboard'%}">ホームに戻る</a>
+        <a class="btn btn-primary" href="{% url 'caregiver_dashboard'%}">ホームに戻る</a>
     </div>
 </div>
 <div style="background-color: rgb(255, 238, 240); padding-left: 0; padding-right: 0;" class="col-2"></div>

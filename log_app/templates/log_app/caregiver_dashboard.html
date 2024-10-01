@@ -24,15 +24,21 @@
     <h1>Home</h1>
     <div class="circle-container">
       <div class="circle-item">
-        <a href="{% url 'sharesheet'%}" class="circle">📓</a>
+        <a href="{% url 'sharesheet'%}">
+          <img class="circle_img" src="{% static 'images/sharesheet.svg' %}">
+        </a>
         <p><a href="{% url 'sharesheet'%}">日誌記入</a></p>
       </div>
       <div class="circle-item">
-        <a href="{% url 'caregiver_students'%}" class="circle">🧑‍🎓</a>
+        <a href="{% url 'caregiver_students'%}">
+          <img class="circle_img" src="{% static 'images/student.svg' %}">
+        </a>
         <p><a href="{% url 'caregiver_students'%}">生徒情報</a></p>
       </div>
       <div class="circle-item">
-        <a href="{% url 'caliculm'%}" class="circle">🖼️</a>
+        <a href="{% url 'caliculm'%}">
+        <img class="circle_img" src="{% static 'images/caliculm.svg' %}">
+        </a>
         <p><a href="{% url 'caliculm'%}">提案</a></p>
       </div>
     </div>

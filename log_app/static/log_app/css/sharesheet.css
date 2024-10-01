@@ -5,7 +5,6 @@
     border-radius: 8px;
     background-color: #F9FFFF;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    min-height: 600px;
 }
 /* タイトルのスタイル */
 .container h1 {
@@ -21,9 +20,6 @@ label {
     font-weight: bold;
     color: #555;
 }
-/* テキストインプットとテキストエリアのスタイル */
-input[type="text"],
-input[type="date"],
 
 .textarea_content {
     width: 100%;
@@ -37,55 +33,17 @@ input[type="date"],
     height: 200px;
     resize: none;
 }
-/* 矢印リンクのスタイル */
-.arrow {
-    text-align: center; /* 矢印を右寄せ */
-    margin-bottom: 20px; /* 戻るボタンとの間にスペースを追加 */
-}
-.arrow a {
-    display: inline-block;
-    font-size: 24px;
-    color: #007BFF;
-    text-decoration: none;
-    transition: color 0.3s ease;
-    padding: 10px;
-}
-.arrow a:hover {
-    color: #0056B3;
-}
-/* 戻るリンクのスタイル */
-p {
-    text-align: right; /* 戻るリンクを右寄せ */
-    margin-right: 30px; /* 戻るボタンを少し左にずらす */
-}
-p a {
-    font-size: 16px;
-    color: #007BFF;
-    text-decoration: none;
-}
-p a:hover {
-    color: #0056B3;
-}
-/* フォーム全体のスタイル */
-form {
-    margin-top: 20px;
-}
-/* Button-style links */
-a[href*="create-student"],
-a[href*="edit-student"],
-a[href*="delete-student"],
-a[href*="home"] {
-    display: inline-block;
-    padding: 10px 15px;
-    margin: 10px;
-    background-color: #007BFF;
-    color: white;
-    border-radius: 5px;
+.submit_button{
     text-align: center;
 }
-a[href*="create-student"]:hover,
-a[href*="edit-student"]:hover,
-a[href*="delete-student"]:hover,
-a[href*="home"]:hover {
-    background-color: #0056B3;
-}
+.Button-style {
+    font-family: "Modak", cursive;
+    font-size: 20px;
+    display: inline-block;
+    padding: 0.2em 1em 0.1em;
+    color: #ff0066;
+    border: solid 2px #ff0066;
+    border-radius: 5px;
+    background-color: #fff0f8;
+    cursor: pointer;
+  }
