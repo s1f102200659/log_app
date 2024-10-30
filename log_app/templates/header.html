@@ -20,7 +20,12 @@
                 </div>
                 <div style="background-color: rgb(255, 238, 240); padding-left: 0; padding-right: 0;" class="col-2">
                     <div style="text-align: right;">
-                        <a href="{% url 'logout' %}" class="btn btn-primary">ログアウト</a>
+                        {% if user.is_authenticated %}
+                            <form action="{% url 'logout' %}" method="post">
+                                {% csrf_token %}
+                                <button type="submit">ログアウト</button>
+                            </form>
+                        {% endif %}
                     </div>
                 </div>
             </div>

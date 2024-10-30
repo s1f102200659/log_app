@@ -3,7 +3,10 @@
 <h1>管理者ダッシュボード</h1>
 {% if request.user.is_authenticated %}
 <p>{{ request.user }}さん、ようこそ管理者ダッシュボードへ。</p>
-<p><a href="{% url 'accounts:logout' %}">ログアウト</a>
+<form action="{% url 'logout' %}" method="post">
+{% csrf_token %}
+<button type="submit">ログアウト</button>
+</form>
   {% endif %}
 
 
