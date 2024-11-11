@@ -12,42 +12,37 @@
 
 <body>
   <header><div id="header"></div></header>
-  <div class="container-fluid" style="padding-left: 0; padding-right: 0;"> 
-    <div class="row g-0"> 
-        <div style="background-color: rgb(255, 238, 240); padding-left: 0; padding-right: 0;" class="col-2"></div>
-        <div class="col-8" style="padding-left: 0; padding-right: 0;">
 
   <div class="container">
     {% if request.user.is_authenticated %}
-      <p>{{ request.user }}さんこんにちは</p>
-    {% endif %}
-    <h1>Home</h1>
-    <div class="circle-container">
-      <div class="circle-item">
-        <a href="{% url 'sharesheet'%}">
-          <img class="circle_img" src="{% static 'images/caregiver.svg' %}">
-        </a>
-        <p><a href="{% url 'sharesheet'%}">日誌記入</a></p>
-      </div>
-      <div class="circle-item">
-        <a href="{% url 'caregiver_students'%}">
-          <img class="circle_img" src="{% static 'images/children.svg' %}">
-        </a>
-        <p><a href="{% url 'caregiver_students'%}">生徒情報</a></p>
-      </div>
-      <div class="circle-item">
-        <a href="{% url 'caliculm'%}">
-        <img class="circle_img" src="{% static 'images/calc.svg' %}">
-        </a>
-        <p><a href="{% url 'caliculm'%}">提案</a></p>
-      </div>
-    </div>
-
-  </div>
-</div>
-<div style="background-color: rgb(255, 238, 240); padding-left: 0; padding-right: 0;" class="col-2"></div>
-</div>
-</div>
+            <h1>ようこそ、{{ request.user }}さん</h1>
+        {% endif %}
+        <div class="buttons">
+            <div class="card">
+                    <h2 style="color: #6200ff;">📝 日誌記入</h2>
+                    <p>今日の活動を記録しましょう</p>
+                <a href="{% url 'sharesheet' %}">
+                    <button class="write-diary" style="background-color: #6200ff;">日誌を書く</button>
+                </a>
+            </div>
+            <div class="card">
+                    <h2 style="color: #00a513;">👤 生徒情報確認</h2>
+                    <p>生徒の情報を確認できます</p>
+                <a href="{% url 'caregiver_students' %}">
+                    <button class="view-student-info" style="background-color: #00a513;">生徒情報を見る</button>
+                </a>
+            </div>
+            <div class="card">
+                    <h2 style="color: #d4d400;">💡 授業提案</h2>
+                    <p>新しい授業のアイデアを共有しましょう</p>
+                <a href="{% url 'caliculm' %}">
+                    <button class="submit-idea" style="background-color: #d4d400;">アイデアを提案</button>
+                </a>
+            </div>
+        </div>
+    <footer>
+        <p>© 2024 Smile Log. All rights reserved.</p>
+        <a href="#">利用規約</a> | <a href="#">プライバシーポリシー</a> | <a href="#">お問い合わせ</a>
+    </footer>
 </body>
-
 </html>
