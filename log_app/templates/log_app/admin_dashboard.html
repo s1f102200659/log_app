@@ -1,20 +1,46 @@
 {% load static %}
 {% csrf_token %}
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ホームページ</title>
+  <link rel="stylesheet" href="{% static 'log_app/css/home.css' %}">
+  <script src="{% static 'js/header.js' %}"></script>
+</head>
+
+<body>
+  <header><div id="header"></div></header>
 <h1>管理者ダッシュボード</h1>
 {% if request.user.is_authenticated %}
 <p>{{ request.user }}さん、ようこそ管理者ダッシュボードへ。</p>
-<p><a href="{% url 'accounts:logout' %}">ログアウト</a>
   {% endif %}
 
 
-  <div class="dashboard-links">
-    <div class="link-item">
-      <a href="{% url 'kindergarten_list' %}" class="button">園情報管理</a>
+  <div class="buttons">
+    <div class="card">
+        <h2 style="color: #6200ff;">🌸 園情報管理</h2>
+        <p>園に関する情報を管理します</p>
+        <a href="{% url 'kindergarten_list' %}">
+            <button class="button" style="background-color: #6200ff;">園情報管理</button>
+        </a>
     </div>
-    <div class="link-item">
-      <a href="{% url 'caregiver_list' %}" class="button">保育士管理</a>
+    <div class="card">
+        <h2 style="color: #00a513;">👤 保育士管理</h2>
+        <p>保育士の情報を管理します</p>
+        <a href="{% url 'caregiver_list' %}">
+            <button class="button" style="background-color: #00a513;">保育士管理</button>
+        </a>
     </div>
-    <div class="link-item">
-      <a href="{% url 'students' %}" class="button">生徒情報管理</a>
+    <div class="card">
+        <h2 style="color: #d4d400;">👶 生徒情報管理</h2>
+        <p>生徒の情報を管理します</p>
+        <a href="{% url 'students' %}">
+            <button class="button" style="background-color: #d4d400;">生徒情報管理</button>
+        </a>
     </div>
-  </div>
+</div>
+
+</body>

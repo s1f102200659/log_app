@@ -130,7 +130,7 @@ def check_sharesheet(request):
             # OpenWeatherMapのAPIエンドポイント
             url = "https://api.openweathermap.org/data/2.5/forecast"
             # 有効なAPIキーをここに入れてください
-            api_key = "88024955f764f1628b85fc6e7177425d"
+            api_key = "4qZpEli0PNog73ZGvajOINISgkuq9v1UNlLqxgHTyMALxdvMrFxhYTRzaTS0zCP402MhUjo42OvJLj9XrBxivKgS"
             # パラメータの設定
             params = {
                 "APPID": api_key,
