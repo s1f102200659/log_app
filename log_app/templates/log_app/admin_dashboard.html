@@ -13,34 +13,38 @@
 
 <body>
   <header><div id="header"></div></header>
-<h1>管理者ダッシュボード</h1>
-{% if request.user.is_authenticated %}
-<p>{{ request.user }}さん、ようこそ管理者ダッシュボードへ。</p>
-  {% endif %}
+  <h1>管理者ダッシュボード</h1>
+  {% if request.user.is_authenticated %}
+  <p>{{ request.user }}さん、ようこそ管理者ダッシュボードへ。</p>
+    {% endif %}
 
 
-  <div class="buttons">
-    <div class="card">
-        <h2 style="color: #6200ff;">🌸 園情報管理</h2>
-        <p>園に関する情報を管理します</p>
-        <a href="{% url 'kindergarten_list' %}">
-            <button class="button" style="background-color: #6200ff;">園情報管理</button>
-        </a>
-    </div>
-    <div class="card">
-        <h2 style="color: #00a513;">👤 保育士管理</h2>
-        <p>保育士の情報を管理します</p>
-        <a href="{% url 'caregiver_list' %}">
-            <button class="button" style="background-color: #00a513;">保育士管理</button>
-        </a>
-    </div>
-    <div class="card">
-        <h2 style="color: #d4d400;">👶 生徒情報管理</h2>
-        <p>生徒の情報を管理します</p>
-        <a href="{% url 'students' %}">
-            <button class="button" style="background-color: #d4d400;">生徒情報管理</button>
-        </a>
-    </div>
-</div>
+    <div class="buttons">
+      <div class="card">
+          <h2 style="color: #6200ff;">🌸 園情報管理</h2>
+          <p>園に関する情報を管理します</p>
+          <a href="{% url 'kindergarten_list' %}">
+              <button class="button" style="background-color: #6200ff;">園情報管理</button>
+          </a>
+      </div>
+      <div class="card">
+          <h2 style="color: #00a513;">👤 保育士管理</h2>
+          <p>保育士の情報を管理します</p>
+          <a href="{% url 'caregiver_list' %}">
+              <button class="button" style="background-color: #00a513;">保育士管理</button>
+          </a>
+      </div>
+      <div class="card">
+          <h2 style="color: #d4d400;">👶 生徒情報管理</h2>
+          <p>生徒の情報を管理します</p>
+          <a href="{% url 'students' %}">
+              <button class="button" style="background-color: #d4d400;">生徒情報管理</button>
+          </a>
+      </div>
+  </div>
+  <footer>
+    <p>© 2024 Smile Log. All rights reserved.</p>
+    <a href="#">利用規約</a> | <a href="#">プライバシーポリシー</a> | <a href="#">お問い合わせ</a>
+</footer>
 
 </body>
