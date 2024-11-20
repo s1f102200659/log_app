@@ -16,7 +16,7 @@ from datetime import datetime, timedelta
 import pytz
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.utils.decorators import method_decorator
-from log_app.models import Student, Kindergarten
+from log_app.models import *
 from django.contrib.auth import get_user_model
 
 User = get_user_model()
@@ -25,7 +25,6 @@ def header_view(request):
     return render(request, 'header.html')
 
 def make_sharesheet(request):
-    print(request.user)
     if request.method == 'GET':
         return render(request, 'log_app/make_sharesheet.html')
     if request.method == 'POST':
@@ -101,9 +100,8 @@ def check_caliculm(request):
 
 def complate(request):
     if request.method == 'POST':
-        form = ActivityForm(request.POST)
-        if form.is_valid():
-            sheet = form.cleaned_data['sheet']
+        caliculum = request.POST.get('sheet')
+        student_info = request.POST.get('student_info')
     return render(request, 'log_app/complate_sharesheet.html')
 
 def check_sharesheet(request):
@@ -165,7 +163,15 @@ def check_sharesheet(request):
                 -生徒の活動-\n{student}
                 """)
             ]
-            return render(request, 'log_app/check_sharesheet.html', {'sheet': chat(kyouyuu).content, 'activity': activity, 'student': student})
+            student_info = [
+                HumanMessage(content=f"""
+                            **以下の情報から生徒の性格を抜き出してください**
+                            例：はるかちゃん：活発な性格、ゆうきくん少し寂しがり屋
+                            {student}
+                             """)
+            ]
+            print(chat(student_info).content)
+            return render(request, 'log_app/check_sharesheet.html', {'sheet': chat(kyouyuu).content, 'activity': activity, 'student': student, 'student_info':chat(student_info).content})
     
     else:
         form = ActivityForm()
