@@ -16,9 +16,11 @@
         <div class="header-right" style="display: flex; align-items: center; margin-left: auto;">
             <!-- 現在時刻を表示するエリアをログアウトボタンの左隣に配置 -->
             <div id="current-time" style="font-size: 18px; color: #333; margin-right: 20px;"></div>
-            <button class="logout-button" style="padding: 10px 20px; font-size: 18px; border: 1px solid #ccc; border-radius: 4px; background-color: white; cursor: pointer; color: #000;">
-                ログアウト
-            </button>
+            <form method="post" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <button type="submit">ログアウト</button>
+            </form>
+              
         </div>
     </header>
     
