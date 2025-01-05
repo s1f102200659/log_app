@@ -4,20 +4,31 @@ from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.views import LoginView
-from .forms import *
+from django.utils.timezone import now
+
+# ▼ langchain ではなく langchain_community に変更
 from langchain.agents import Tool, initialize_agent, AgentType
-from langchain.chat_models import ChatOpenAI
-from langchain.llms import OpenAI
+from langchain_community.chat_models import ChatOpenAI
+from langchain_community.llms import OpenAI
 from langchain.schema import AIMessage, HumanMessage, SystemMessage
+from langchain.text_splitter import RecursiveCharacterTextSplitter
+from langchain.embeddings import OpenAIEmbeddings
+from langchain.vectorstores import Chroma
+from langchain.chains import RetrievalQA
+
 import json
 import os
 import requests
 from datetime import datetime, timedelta
 import pytz
+
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.utils.decorators import method_decorator
-from log_app.models import *
 from django.contrib.auth import get_user_model
+
+from log_app.models import *
+from accounts.models import *
+from .forms import *
 
 User = get_user_model()
 
@@ -37,10 +48,26 @@ def make_caliculm(request):
         return render(request, 'log_app/make_caliculm.html')
 
 def check_caliculm(request):
-    OPENAI_API_KEY = 'FtNgvdPCxSPHqW17Tg1uQB1lZMJ-YllQk2r3eiz1pOlpBrXUmM5sgbHLOTxw76bUlTcs04Y6-jckkxM-Rykm5yQ'
-    OPENAI_API_BASE = 'https://api.openai.iniad.org/api/v1'
-    chat = ChatOpenAI(openai_api_key=OPENAI_API_KEY, openai_api_base=OPENAI_API_BASE, model_name='gpt-4o-mini', temperature=0)
-
+    # 今ログインしているユーザーの担当している生徒の情報を取得
+    user_id = request.user.id
+    students_info = Journal.objects.filter(caregiver_id = user_id)
+    student_infos = ""
+    for student in students_info:
+        student_infos += str(student)
+    #ドキュメントの分割
+    llm = ChatOpenAI(model="gpt-4o-mini", openai_api_key=settings.OPENAI_API_KEY, openai_api_base='https://api.openai.iniad.org/api/v1')
+    text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200)
+    docs = text_splitter.create_documents([student_infos])
+    splits = text_splitter.split_documents(docs)
+    #ベクトルスコアの作成
+    embedding = OpenAIEmbeddings(openai_api_key=settings.OPENAI_API_KEY,openai_api_base='https://api.openai.iniad.org/api/v1')
+    vector_store = Chroma.from_documents(documents=splits, embedding=embedding)
+    #RetrievaLQAのセットアップ
+    qa = RetrievalQA.from_chain_type(llm=llm, retriever=vector_store.as_retriever())
+    # 今ログインしているユーザーの保育園の郵便番号を取得
+    Kindergarten_id = request.user.kindergarten_id
+    Kindergarten_info = Kindergarten.objects.get(id = Kindergarten_id)
+    chat = ChatOpenAI(openai_api_key=settings.OPENAI_API_KEY, openai_api_base=settings.OPENAI_API_BASE, model_name='gpt-4o-mini', temperature=0)
     if request.method == 'POST':
         sendedform = SendedForm(request.POST)
         form = CaliculumForm(request.POST)
@@ -61,47 +88,45 @@ def check_caliculm(request):
             params = {
                 "APPID": api_key,
                 "units": "metric",
-                "zip": "167-0053,jp",
+                "zip": "167-0053" + ",jp",
                 "lang": "ja"
             }
             res = requests.get(url, params=params)
             if res.status_code == 200:
                 weather_data = res.json()
                 forecast_list = weather_data.get('list', [])
-                utc_timezone = pytz.timezone("UTC")
-                jst_timezone = pytz.timezone("Asia/Tokyo")
                 for forecast in forecast_list[:3]:
-                    dt_txt_utc = forecast.get('dt_txt', '情報なし')
-                    dt_utc = datetime.strptime(dt_txt_utc, '%Y-%m-%d %H:%M:%S')
-                    dt_utc = utc_timezone.localize(dt_utc)
-                    dt_jst = dt_utc.astimezone(jst_timezone)
                     temp = forecast['main'].get('temp', '情報なし')
                     humidity = forecast['main'].get('humidity', '情報なし')
                     weather_description = forecast['weather'][0].get('main', '情報なし')
-                    result += f"日時: {dt_jst.strftime('%Y-%m-%d %H:%M:%S')}, 気温: {temp}°C, 湿度: {humidity}%, 天気: {weather_description}\n"
+                    result += f"日時: {date}, 気温: {temp}°C, 湿度: {humidity}%, 天気: {weather_description}\n"
+                query=f"""
+                        -授業の日付、{date}、 今日の天気-{result}、 -本日の狙い-{text}、 -園の方針-{Kindergarten_info.policy}
+                        今日の日付と天気、気温、与えられた生徒の性格を考慮して今日の保育園での授業内容を10個考えてください.
+                        生徒の情報が不足している場合には一般的な授業を考えてください。
+                        """
+                answer = qa.run(query)
+                return render(request, 'log_app/check_caliculm.html', {'caliculum': answer})
             else:
                 print(f"エラー: {res.status_code}, {res.json()}")
-
-            caliculum = [
-                HumanMessage(content=f"""
-                            -今日の天気-{result}
-                            -生徒の特長-
-                            1. *春樹くん*: 元気に走り回っていることから、活発でエネルギッシュな性格を持っている。
-                            2. *健くん*: 「今日も元気いっぱい」とあるように、常に元気で明るい性格の持ち主である。
-                            3. *はるかちゃん*: お人形遊びをしていることから、想像力が豊かで、遊びや芸術的な活動を楽しむ傾向がある。
-                            4. *唯ちゃん*: はるかちゃんと一緒にお人形遊びをしているため、友達と協力して遊ぶことを楽しむ社交的な性格が示唆される。
-                            -狙い-{text}
-                            今日の日付と天気、気温、生徒の性格を考慮して今日の保育園での授業内容を10個考えてください
-                            """)
-            ]
-            return render(request, 'log_app/check_caliculm.html', {'caliculum': chat(caliculum).content})
 
     return render(request, 'log_app/make_caliculm.html')
 
 def complate(request):
     if request.method == 'POST':
-        caliculum = request.POST.get('sheet')
+        sharesheet = request.POST.get('sheet')
         student_info = request.POST.get('student_info')
+        kindergarden_id = request.user.kindergarten_id
+        caregiver_id = request.user.id
+        print(student_info,"oooooooooo",sharesheet)
+        Journal.objects.create(  
+            date=now().date(),
+            shared_sheet = sharesheet,
+            caregiver_id=caregiver_id,
+            kindergarten_id=kindergarden_id,
+            students_condition=student_info
+        )
+
     return render(request, 'log_app/complate_sharesheet.html')
 
 def check_sharesheet(request):
@@ -137,10 +162,7 @@ def check_sharesheet(request):
                 today = f"日時: {dt_jst.strftime('%Y-%m-%d %H:%M:%S')}, 気温: {temp}°C, 湿度: {humidity}%, 天気: {weather_description}"
             else:
                 print(f"エラー: {res.status_code}, {res.json()}")
-
-            OPENAI_API_KEY = 'FtNgvdPCxSPHqW17Tg1uQB1lZMJ-YllQk2r3eiz1pOlpBrXUmM5sgbHLOTxw76bUlTcs04Y6-jckkxM-Rykm5yQ'
-            OPENAI_API_BASE = 'https://api.openai.iniad.org/api/v1'
-            chat = ChatOpenAI(openai_api_key=OPENAI_API_KEY, openai_api_base=OPENAI_API_BASE, model_name='gpt-4o-mini', temperature=0)
+            chat = ChatOpenAI(openai_api_key=settings.OPENAI_API_KEY, openai_api_base=settings.OPENAI_API_BASE, model_name='gpt-4o-mini', temperature=0)
             kyouyuu = [
                 HumanMessage(content=f"""**クラス日誌作成のためのガイドライン**
                 1 -今日の日付と天気-
@@ -167,10 +189,10 @@ def check_sharesheet(request):
                 HumanMessage(content=f"""
                             **以下の情報から生徒の性格を抜き出してください**
                             例：はるかちゃん：活発な性格、ゆうきくん少し寂しがり屋
-                            {student}
-                             """)
+                            文脈から察することができる性格も抜き出してください。
+                            {student}性格を抜き出すだけにしてそれ以外の情報は一切載せないようにしてください。
+                            """)
             ]
-            print(chat(student_info).content)
             return render(request, 'log_app/check_sharesheet.html', {'sheet': chat(kyouyuu).content, 'activity': activity, 'student': student, 'student_info':chat(student_info).content})
     
     else:
@@ -254,7 +276,6 @@ def admin_dashboard(request):
 @login_required(login_url='/login/') 
 @user_passes_test(is_caregiver)
 def caregiver_dashboard(request):
-    print(request.user.kindergarten_id)
     return render(request, 'log_app/caregiver_dashboard.html')
 
 @method_decorator([login_required, user_passes_test(is_admin)], name='dispatch')

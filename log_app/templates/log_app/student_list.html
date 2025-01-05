@@ -40,7 +40,7 @@
       <th>生年月日</th>
       <th>アレルギー</th>
       <th>追記</th>
-      <th></th>
+      <th>性格</th>
       {% if request.user.role == 'admin' %}
       <th></th>
       <th></th>
@@ -56,7 +56,7 @@
       <td>{{ student.birth_date }}</td>
       <td>{{ student.allergy_info }}</td>
       <td>{{ student.additional_info }}</td>
-      <td><a href="{% url 'student' student.pk %}">確認</a></td>
+      <td><a href="{% url 'student' student.pk %}">性格・特徴</a></td>
       {% if request.user.role == 'admin' %}
       <td><a href="{% url 'edit-student' student.pk %}">編集</a></td>
       <td><a href="{% url 'delete-student' student.pk %}">削除</a></td>
