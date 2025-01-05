@@ -199,6 +199,16 @@ def check_sharesheet(request):
         form = ActivityForm()
     return render(request, 'log_app/check_sharesheet.html', {'form': form})
 
+def student_detail(request, pk):
+    if request.method == 'POST':
+        # 何らかの更新処理など
+        student_name = request.POST.get('student_name')
+        print(student_name)
+        return render(request, 'log_app/student_detail.html', {'student_name': student_name})
+    else:
+        student = Student.objects.get(pk=pk)
+        return render(request, 'log_app/student_detail.html', {'student': student})
+
 def is_admin(user):
     return user.role == 'admin'
 
@@ -297,10 +307,6 @@ class CaregiverStudentList(ListView):
     def get_queryset(self):
         user = self.request.user
         return Student.objects.filter(caregiver=user)
-
-class StudentDetail(DetailView):
-    model = Student
-    context_object_name = 'student'
 
 @method_decorator([login_required, user_passes_test(is_admin)], name='dispatch')
 class StudentCreate(CreateView):

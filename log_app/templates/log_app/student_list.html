@@ -56,7 +56,13 @@
       <td>{{ student.birth_date }}</td>
       <td>{{ student.allergy_info }}</td>
       <td>{{ student.additional_info }}</td>
-      <td><a href="{% url 'student' student.pk %}">性格・特徴</a></td>
+      <td>
+        <form method="POST" action="{% url 'student' student.pk %}">
+          {% csrf_token %}
+          <input type="hidden" name="student_name" value="{{ student.name }}">
+          <button type="submit">性格・特徴</button>
+        </form>
+      </td>
       {% if request.user.role == 'admin' %}
       <td><a href="{% url 'edit-student' student.pk %}">編集</a></td>
       <td><a href="{% url 'delete-student' student.pk %}">削除</a></td>
