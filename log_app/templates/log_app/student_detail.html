@@ -25,7 +25,7 @@
     <li><strong>生年月日:</strong> {{ student.birth_date }}</li>
     <li><strong>アレルギー:</strong> {{ student.allergy_info }}</li>
     <li><strong>追記:</strong> {{ student.additional_info }}</li>
-    <li><strong>性格:</strong> {{ student.personality }}</li>
+    <li><strong>性格:</strong> {{ answer }}</li>
     {% if request.user.role == 'admin' %}
     <p style="text-align: center;"><a href="{% url 'admin_dashboard' %}">戻る</a></p>
     {% elif request.user.role == 'caregiver' %}

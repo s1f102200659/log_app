@@ -15,6 +15,7 @@ from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.embeddings import OpenAIEmbeddings
 from langchain.vectorstores import Chroma
 from langchain.chains import RetrievalQA
+from langchain.docstore.document import Document
 
 import json
 import os
@@ -48,21 +49,36 @@ def make_caliculm(request):
         return render(request, 'log_app/make_caliculm.html')
 
 def check_caliculm(request):
-    # 今ログインしているユーザーの担当している生徒の情報を取得
+   # 1. 今ログインしているユーザーの担当している生徒の情報を取得
     user_id = request.user.id
-    students_info = Journal.objects.filter(caregiver_id = user_id)
-    student_infos = ""
-    for student in students_info:
-        student_infos += str(student)
-    #ドキュメントの分割
-    llm = ChatOpenAI(model="gpt-4o-mini", openai_api_key=settings.OPENAI_API_KEY, openai_api_base='https://api.openai.iniad.org/api/v1')
+    journals = Journal.objects.filter(caregiver_id=user_id)
+    docs = []
+    for journal_entry in journals:
+        content_str = str(journal_entry.students_condition)
+        doc = Document(
+            page_content=content_str,
+            metadata={
+                "journal_id": journal_entry.id,
+                "caregiver_id": journal_entry.caregiver_id,
+            }
+        )
+        docs.append(doc)
+
     text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200)
-    docs = text_splitter.create_documents([student_infos])
-    splits = text_splitter.split_documents(docs)
-    #ベクトルスコアの作成
-    embedding = OpenAIEmbeddings(openai_api_key=settings.OPENAI_API_KEY,openai_api_base='https://api.openai.iniad.org/api/v1')
-    vector_store = Chroma.from_documents(documents=splits, embedding=embedding)
-    #RetrievaLQAのセットアップ
+    split_docs = text_splitter.split_documents(docs)
+
+    llm = ChatOpenAI(
+        model="gpt-4o-mini",
+        openai_api_key=settings.OPENAI_API_KEY,
+        openai_api_base='https://api.openai.iniad.org/api/v1'
+    )
+    embedding = OpenAIEmbeddings(
+        openai_api_key=settings.OPENAI_API_KEY,
+        openai_api_base='https://api.openai.iniad.org/api/v1'
+    )
+
+    vector_store = Chroma.from_documents(documents=split_docs, embedding=embedding)
+
     qa = RetrievalQA.from_chain_type(llm=llm, retriever=vector_store.as_retriever())
     # 今ログインしているユーザーの保育園の郵便番号を取得
     Kindergarten_id = request.user.kindergarten_id
@@ -118,7 +134,6 @@ def complate(request):
         student_info = request.POST.get('student_info')
         kindergarden_id = request.user.kindergarten_id
         caregiver_id = request.user.id
-        print(student_info,"oooooooooo",sharesheet)
         Journal.objects.create(  
             date=now().date(),
             shared_sheet = sharesheet,
@@ -199,15 +214,53 @@ def check_sharesheet(request):
         form = ActivityForm()
     return render(request, 'log_app/check_sharesheet.html', {'form': form})
 
-def student_detail(request, pk):
-    if request.method == 'POST':
-        # 何らかの更新処理など
-        student_name = request.POST.get('student_name')
-        print(student_name)
-        return render(request, 'log_app/student_detail.html', {'student_name': student_name})
-    else:
-        student = Student.objects.get(pk=pk)
-        return render(request, 'log_app/student_detail.html', {'student': student})
+def student_detail(request, pk):    
+
+    # 今ログインしているユーザーの担当している Journal を取得
+    user_id = request.user.id
+    journals = Journal.objects.filter(caregiver_id=user_id)
+
+    docs = []
+    for journal_entry in journals:
+        content_str = str(journal_entry.students_condition)
+        doc = Document(
+            page_content=content_str,
+            metadata={
+                "journal_id": journal_entry.id,
+                # もし Journal に student_id があるならここで入れる
+                # 例: "student_id": journal_entry.student_id
+            }
+        )
+        docs.append(doc)
+
+    text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200)
+    split_docs = text_splitter.split_documents(docs)
+    llm = ChatOpenAI(
+        model="gpt-4o-mini",
+        openai_api_key=settings.OPENAI_API_KEY,
+        openai_api_base="https://api.openai.iniad.org/api/v1"
+    )
+    embedding = OpenAIEmbeddings(
+        openai_api_key=settings.OPENAI_API_KEY,
+        openai_api_base="https://api.openai.iniad.org/api/v1"
+    )
+    vector_store = Chroma.from_documents(split_docs, embedding=embedding)
+
+    qa = RetrievalQA.from_chain_type(
+        llm=llm,
+        retriever=vector_store.as_retriever()
+    )
+
+    student = Student.objects.get(pk=pk)
+
+    query = f"""
+    {student.name}の性格に関する情報を教えてください。
+    生徒の性格に関する情報以外が入っていないかを再度確認して入っていなければ送ってください。
+    """
+
+    answer = qa.run(query)
+    print(answer)
+    return render(request, 'log_app/student_detail.html', {'student': student,'answer': answer})
 
 def is_admin(user):
     return user.role == 'admin'

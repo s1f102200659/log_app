@@ -42,6 +42,8 @@ label {
     border: 1px solid #ced4da;
     margin-bottom: 20px;
     font-size: 1em;
+    resize: none;
+
 }
 
 /* 送信ボタンのスタイル */
@@ -90,8 +92,4 @@ footer a {
 }
 footer a:hover {
     text-decoration: underline;
-}
-.textarea_content::placeholder {
-    color: #a9a9a9; /* 任意の色コードに変更可能 */
-    opacity: 1; /* 必要に応じて透明度を調整 */
 }

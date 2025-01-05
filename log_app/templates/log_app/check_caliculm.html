@@ -20,7 +20,7 @@
         <form method="POST" action="{% url 'check_caliculm' %}">
             {% csrf_token %}
             <label for="contact">授業の確認</label>
-            <textarea class="textarea_content" readonly class="content">{{caliculum}}</textarea>
+            <textarea class="textarea_content" readonly rows="20">{{caliculum}}</textarea>
             <input type="hidden" name="sheet" value="{{ caliculum }}">
             <textarea id="message" name="message" rows="2" required style="width: 100%; font-size: large;"></textarea>
             <div style="text-align: center;">            
