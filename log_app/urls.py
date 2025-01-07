@@ -1,7 +1,7 @@
 from django.urls import path, include
 from . import views
 from .views import (
-    StudentList, StudentDetail, StudentCreate, StudentUpdate, StudentDelete,
+    StudentList, StudentCreate, StudentUpdate, StudentDelete,
     CaregiverLoginView, admin_dashboard, caregiver_dashboard, CaregiverStudentList,
     KindergartenList, KindergartenCreate, KindergartenUpdate, KindergartenDelete,
     CaregiverList, CaregiverCreate, CaregiverUpdate, CaregiverDelete
@@ -20,7 +20,7 @@ urlpatterns = [
     path('check/caliculm',views.check_caliculm,name='check_caliculm'),
     path('student_info', StudentList.as_view(), name='students'),
     path('caregiver/student_info/', CaregiverStudentList.as_view(), name='caregiver_students'),
-    path('student/<int:pk>/', StudentDetail.as_view(), name='student'),
+    path('student/<int:pk>/',views.student_detail, name='student'),
     path('create-student/', StudentCreate.as_view(), name='create-student'),
     path('edit-student/<int:pk>/', StudentUpdate.as_view(), name='edit-student'),
     path('delete-student/<int:pk>/', StudentDelete.as_view(), name='delete-student'),

@@ -12,7 +12,7 @@
 <body>
     <header><div id="header"></div></header>
   <div class="container-fluid" style="padding-left: 0; padding-right: 0;"> 
-    <div class="row g-0"> 
+    <div class="row g-0">
         <div style="background-color: rgb(255, 238, 240); padding-left: 0; padding-right: 0;" class="col-2"></div>
         <div class="col-8" style="padding-left: 0; padding-right: 0;">
     <div class="container">
@@ -20,7 +20,7 @@
         <form method="POST" action="{% url 'check_caliculm' %}">
             {% csrf_token %}
             <label for="contact">授業の確認</label>
-            <textarea class="textarea_content" readonly class="content">{{caliculum}}</textarea>
+            <textarea class="textarea_content" readonly rows="20">{{caliculum}}</textarea>
             <input type="hidden" name="sheet" value="{{ caliculum }}">
             <textarea id="message" name="message" rows="2" required style="width: 100%; font-size: large;"></textarea>
             <div style="text-align: center;">            
